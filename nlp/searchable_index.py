@@ -1,4 +1,3 @@
-
 import os; os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 from beir.datasets.data_loader import GenericDataLoader
 from sentence_transformers import SentenceTransformer
@@ -32,6 +31,8 @@ def get_or_create_contexts():
                     to_add.append(doc["text"])
                 contexts = np.concatenate((contexts, np.array(to_add)))
                 contexts = np.unique(contexts)
+            with open("./resources/contexts.txt", "w+") as f:
+                json.dump(contexts, f)
         get_or_create_contexts.contexts = contexts
     # Return contexts
     return get_or_create_contexts.contexts
