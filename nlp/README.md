@@ -3,7 +3,7 @@
 ## Setup
 
 ```
-python -m venv env
+python3 -m venv env
 source env/bin/activate
 pip install -r requirements.txt
 ```
@@ -26,5 +26,5 @@ python evaluate.py
 /evaluate.py
 /questions_answering.py
 /searchable_index.py
-/resources
+/README.md
 ```
