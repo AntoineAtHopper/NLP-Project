@@ -31,6 +31,8 @@ def get_or_create_contexts():
                     to_add.append(doc["text"])
                 contexts = np.concatenate((contexts, np.array(to_add)))
                 contexts = np.unique(contexts)
+            if not os.path.exists("./resources"):
+                os.makedirs("./resources")
             with open("./resources/contexts.txt", "w+") as f:
                 json.dump(contexts, f)
         get_or_create_contexts.contexts = contexts
@@ -48,6 +50,8 @@ def get_or_create_searchable_index():
             searchable_index = np.loadtxt("./resources/searchable_index.txt").reshape(len(contexts), -1)
         else:
             searchable_index = sentence_transformer.encode(contexts)
+            if not os.path.exists("./resources"):
+                os.makedirs("./resources")
             np.savetxt("./resources/searchable_index.txt", searchable_index)
         get_or_create_contexts.searchable_index = searchable_index
     return get_or_create_contexts.searchable_index
@@ -74,7 +78,7 @@ def get_nn_approx(v, k):
 
 
 # Search in the index.
-def search_contexts(question, *, approximate=False, k=1):
+def search_contexts(question, *, approximate=False, k=3):
     contexts = get_or_create_contexts()
     q = sentence_transformer.encode(question)
     topk = get_nn_approx(q, k) if approximate else get_nn(q, k)
