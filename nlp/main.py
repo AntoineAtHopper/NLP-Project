@@ -6,8 +6,9 @@ try:
     while True:
         question = input(">>> ")
         contexts = search_contexts(question)
-        context = "".join(contexts)
+        context = " ".join(contexts)
+        #print(context)
         answer = answer_question(question, context)
-        print(answer)
+        print(answer["answer"])
 except KeyboardInterrupt:
     print('Exit...')
