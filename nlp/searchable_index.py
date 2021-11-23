@@ -29,12 +29,12 @@ def get_or_create_contexts():
             for doc in list(corpus.values())[:14000]: # The first 14000 completes the SQuAD v2 validation set for ~10000 samples
                 if len(doc["text"].split()) > 50:
                     to_add.append(doc["text"])
-                contexts = np.concatenate((contexts, np.array(to_add)))
-                contexts = np.unique(contexts)
+            contexts = np.concatenate((contexts, np.array(to_add)))
+            contexts = np.unique(contexts)
             if not os.path.exists("./resources"):
                 os.makedirs("./resources")
             with open("./resources/contexts.txt", "w+") as f:
-                json.dump(contexts, f)
+                json.dump(contexts.tolist(), f)
         get_or_create_contexts.contexts = contexts
     # Return contexts
     return get_or_create_contexts.contexts
@@ -53,8 +53,8 @@ def get_or_create_searchable_index():
             if not os.path.exists("./resources"):
                 os.makedirs("./resources")
             np.savetxt("./resources/searchable_index.txt", searchable_index)
-        get_or_create_contexts.searchable_index = searchable_index
-    return get_or_create_contexts.searchable_index
+        get_or_create_searchable_index.searchable_index = searchable_index
+    return get_or_create_searchable_index.searchable_index
 
 
 # Query searchable index using Nearest Neighbors.
