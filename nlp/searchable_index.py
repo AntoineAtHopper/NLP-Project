@@ -58,14 +58,14 @@ def get_or_create_searchable_index():
 
 
 # Query searchable index using Nearest Neighbors.
-def get_nn(v, k):
+def get_nn(v: int, k: int):
     searchable_index = get_or_create_searchable_index()
     distances = v @ searchable_index.T
     return np.argsort(distances)[::-1][:k]
 
 
 # Query searchable index using Approximative Nearest Neighbors.
-def get_nn_approx(v, k):
+def get_nn_approx(v: int, k: int):
     searchable_index = get_or_create_searchable_index()
     if not hasattr(get_nn_approx, "nn"):
         nn = AnnoyIndex(768, "dot")
@@ -78,7 +78,7 @@ def get_nn_approx(v, k):
 
 
 # Search in the index.
-def search_contexts(question, *, approximate=False, k=3):
+def search_contexts(question: str, *, approximate: bool=False, k: int=3):
     contexts = get_or_create_contexts()
     q = sentence_transformer.encode(question)
     topk = get_nn_approx(q, k) if approximate else get_nn(q, k)
