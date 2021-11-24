@@ -11,6 +11,7 @@ pip install -r requirements.txt
 ## Usage
 
 ### Interpreter mode
+! The first question/execution may take some time !
 ```
 python main.py
 ```
@@ -22,9 +23,17 @@ python evaluate.py
 
 ## Project structure
 ```
-/main.py
-/evaluate.py
-/questions_answering.py
-/searchable_index.py
-/README.md
+# Script to launch the project in interactive mode
+./main.py
+
+# Script to launch the project for evaluation
+./evaluate.py
+
+# Functions used for the first part of the project
+./questions_answering.py
+
+# Functions used for the second part of the project
+./searchable_index.py
+
+./README.md
 ```
