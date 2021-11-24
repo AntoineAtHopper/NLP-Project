@@ -8,3 +8,7 @@ Il est composé de deux notebooks pour les deux premières parties et d'un dossi
     pip install -r requirements.txt
 
 Voir requirements.txt
+
+
+Notre modèle entrainé sur une partie de squadV2 est disponible sur drive : 
+https://drive.google.com/drive/folders/17HVziD6Oo2yDtjacUAbHnDTG2JF6Dnxy?usp=sharing
