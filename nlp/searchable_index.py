@@ -9,7 +9,7 @@ import numpy as np
 import json
 
 # Create dataset for the searchable index using SquadV2 and DBPedia.
-def get_or_create_contexts():
+def get_or_create_contexts() -> np.ndarray:
     if not hasattr(get_or_create_contexts, "contexts"):
         contexts = None
         if os.path.isfile("./resources/contexts.txt"):
@@ -42,7 +42,7 @@ def get_or_create_contexts():
 
 sentence_transformer = SentenceTransformer('msmarco-distilbert-base-tas-b')
 # Get or Create a searchable index.
-def get_or_create_searchable_index():
+def get_or_create_searchable_index() -> np.ndarray:
     if not hasattr(get_or_create_searchable_index, "searchable_index"):
         searchable_index = None
         contexts = get_or_create_contexts()
@@ -58,14 +58,14 @@ def get_or_create_searchable_index():
 
 
 # Query searchable index using Nearest Neighbors.
-def get_nn(v: int, k: int):
+def get_nn(v: int, k: int) -> np.ndarray:
     searchable_index = get_or_create_searchable_index()
     distances = v @ searchable_index.T
     return np.argsort(distances)[::-1][:k]
 
 
 # Query searchable index using Approximative Nearest Neighbors.
-def get_nn_approx(v: int, k: int):
+def get_nn_approx(v: int, k: int) -> np.ndarray:
     searchable_index = get_or_create_searchable_index()
     if not hasattr(get_nn_approx, "nn"):
         nn = AnnoyIndex(768, "dot")
@@ -78,7 +78,7 @@ def get_nn_approx(v: int, k: int):
 
 
 # Search in the index.
-def search_contexts(question: str, *, approximate: bool=False, k: int=3):
+def search_contexts(question: str, *, approximate: bool=False, k: int=3) -> np.ndarray:
     contexts = get_or_create_contexts()
     q = sentence_transformer.encode(question)
     topk = get_nn_approx(q, k) if approximate else get_nn(q, k)
